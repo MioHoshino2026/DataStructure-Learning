@@ -1,5 +1,6 @@
 //链表结构的H文件
 #ifndef _LIST_H
+#define _LIST_H
 
 struct Node;
 typedef struct Node* PtrToNode;
