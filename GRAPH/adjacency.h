@@ -13,4 +13,6 @@ void AddEdge( GraphList graph, int src, int dest );
 void PrintGraph( GraphList graph );
 void DeleteGraph( GraphList graph );
 
+void PrintIndegree( GraphList graph );
+
 #endif

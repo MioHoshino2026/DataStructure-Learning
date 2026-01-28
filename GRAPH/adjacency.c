@@ -11,6 +11,7 @@ struct Node{
 struct Graph{
     int NumVertices;
     AdjList AdjLists;
+    int* Indegree;
 };
 
 Vertex CreateNode( int dest ){
@@ -36,8 +37,13 @@ GraphList CreateGraph( int vertices ){
     if ( graph->AdjLists == NULL ){
         FatalError("Out of Space!!!");
     }
+    graph->Indegree = malloc(sizeof(int) * graph->NumVertices );
+    if ( graph->Indegree == NULL ){
+        FatalError("Out of Space!!!");
+    }
     for ( int i = 0; i<graph->NumVertices; i++ ){
         graph->AdjLists[i] = NULL;
+        graph->Indegree[i] = 0;
     }
     return graph;
 }
@@ -46,6 +52,7 @@ void AddEdge( GraphList graph, int src, int dest ){
     Vertex NewNode = CreateNode( dest );
     NewNode->Next = graph->AdjLists[src];
     graph->AdjLists[src] = NewNode;
+    graph->Indegree[dest]++;
 }
 
 void PrintGraph(GraphList graph){
@@ -61,6 +68,12 @@ void PrintGraph(GraphList graph){
     }
 }
 
+void PrintIndegree(GraphList graph){
+    for( int i = 0; i < graph->NumVertices; i++ ){
+        printf("The indegree of %d is %d.\n",i,graph->Indegree[i]);
+    }
+}
+
 void DeleteGraph(GraphList graph){
     Vertex Tmp, ToFree;
     for ( int i = 0; i<graph->NumVertices; i++ ){
@@ -72,5 +85,6 @@ void DeleteGraph(GraphList graph){
         }
     }
     free(graph->AdjLists);
+    free(graph->Indegree);
     free(graph);
 }
